@@ -1,28 +1,49 @@
 import {Fragment, useState, useEffect} from "react";
-import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://127.0.0.1:4000";
+import Socket from "./Socket";
+import { Comment, Tooltip, Avatar } from 'antd';
+import socket from "./Socket";
 
 const Mensajes = ({token}) =>{
-    const [response, setResponse] = useState("");
+   const [mensaje, cambiarMensaje] = useState([]);
+   const [mensajes, cambiarMensajes] = useState([])
 
-  useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
-    socket.emit("FromAPI", "Hola Mundito")
-  }, []);
+   useEffect(()=>{
+     socket.emit("conexion", "Un usuario a ingresado a la sala")
+   },[])
 
-  useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
-    socket.on("FromAPI", data => {
-        setResponse(data)
-      });
-  }, []);
+   useEffect(()=>{
+    socket.on('mensajes', mensaje =>{
+      cambiarMensajes([...mensajes, mensaje])
+    })
+    return () => {socket.off()}
+  }, [mensajes])
+
+  const enviarMensaje = (e) => {
+    e.preventDefault();
+    socket.emit('mensaje', mensaje)
+  }
 
 
   return (
-    <p>
-      {response}
-    </p>
-  );
+    <Fragment>
+      <div>
+        <div className="cuadro-mensajes">
+          {mensajes.map((msg)=>(
+            <div className="contenedor-chat">{msg.mensaje}</div>
+          ))}
+        </div>
+        <div className="cuadro-texto">
+          <div className="contenedor-cuadro">
+            <form onSubmit={enviarMensaje}>
+            <textarea value={mensaje} onChange={e=>cambiarMensaje(e.target.value)}>Escribe tu mensaje</textarea>
+              <button className="boton-mensaje">Enviar</button> 
+            </form>
+            
+          </div>
+        </div>
+      </div>
+    </Fragment>
+  )
 
 }
 

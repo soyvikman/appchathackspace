@@ -18,25 +18,22 @@ app.use(cors())
 app.use("/message", message);
 app.use("/user", user);
 
-
-
-
 //Conectando socket
-const io = socketIo(server, {
-    cors: "*"
+const io = socketIo(server,{cors: {
+  origin: '*'
+}})
+
+io.on('connection', socket => {
+  socket.on('conectado', () => {
+    console.log("Nuevo usuario conectado")
+  });
+
+  socket.on('mensaje', (mensaje) =>{
+    io.emit('mensajes', {mensaje})
+  })
 });
 
-io.on("connection", (socket) => {
-    console.log("Nuevo usuario conectado");
-    socket.on("FromAPI", data => {
-        console.log(data)
-        socket.emit("rata", data)
-      });
-      
-    socket.on("disconnect", () => {
-      console.log("Usuario desconectado");
-    });
-  });
+
 
 //levantando servidor
 server.listen(PORT, ()=>{

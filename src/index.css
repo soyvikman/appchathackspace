@@ -18,3 +18,44 @@
     border-radius: 1%;
     background-color: white;
 }
+
+.cuadro-mensajes{
+    width: 80%;
+    height: 70vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+    background-color: darkgray;
+    overflow-y: auto;
+
+}
+
+.cuadro-texto{
+    width: 80%;
+    height: 30vh;
+    margin: 0 auto;
+}
+
+textarea{
+    width: 90%;
+}
+
+.contenedor-cuadro{
+    display: flex;
+    align-items: center;
+}
+
+.boton-mensaje{
+    height: 100%;
+}
+
+.contenedor-chat{
+    border: 1px solid black;
+    width: 50%;
+    height: 5vh;
+    border-radius: 1%;
+    text-align: center;
+    margin: 1%;
+    background-color: white;
+    
+}
