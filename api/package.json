@@ -17,6 +17,7 @@
     "morgan": "^1.10.0",
     "mysql2": "^2.2.5",
     "react-router-dom": "^5.2.0",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "socket.io": "^3.0.3"
   }
 }
